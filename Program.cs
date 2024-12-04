@@ -2,19 +2,26 @@ using Simplz.DND.Calculator.Components;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var rolls = 10;
+var rolls = 100;
 
 long a1Total = 0;
 long a2Total = 0;
-foreach(int i in Enumerable.Range(0, rolls))
+int abilityModifier = 5;
+foreach (int i in Enumerable.Range(0, rolls))
 {
-    var a1 = Random.Shared.NextInt64(1, 9);
-    if (a1 == 8)
-        a1 += Random.Shared.NextInt64(1, 9);
+    long a1 = 0;
+    foreach (int j in Enumerable.Range(0, abilityModifier + 1))
+    {
+        var a = Random.Shared.NextInt64(1, 9);
+        a1Total += a;
+        a1 += a;
+        if (a < 8)
+            break;
+    }
+
     var a2 = Random.Shared.NextInt64(1, 11);
-    a1Total += a1;
     a2Total += a2;
-    Console.WriteLine($"a1: {a1}, a2: {a2}");
+    // Console.WriteLine($"a1: {a1}, a2: {a2}");
 }
 Console.WriteLine($"a1: {a1Total} ({a1Total / rolls})");
 Console.WriteLine($"a2: {a2Total} ({a2Total / rolls})");
